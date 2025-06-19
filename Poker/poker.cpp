@@ -2,7 +2,9 @@
 
 Poker::Poker(void) : _buttonStart(this, 200, 500, 5, "START", olc::BLACK, olc::WHITE),
 					_buttonSettings(this, 550, 500, 5, "SETTINGS", olc::BLACK, olc::WHITE),
-					_buttonBackToMenu(this, 0, 725, 3, "<- MENU", olc::BLACK, olc::WHITE)
+					_buttonBackToMenu(this, 0, 725, 3, "<- MENU", olc::BLACK, olc::WHITE),
+					_buttonIncreasePlayers(this, 700, 200, 3, "+", olc::BLACK, olc::WHITE),
+					_buttonDecreasePlayers(this, 750, 200, 3, "-", olc::BLACK, olc::WHITE)
 {
 	sAppName = "POKER";
 }
@@ -49,6 +51,16 @@ void Poker::Input(void)
 		if (_buttonBackToMenu.IsClicked(_mouseX, _mouseY))
 		{
 			_state = State::MainMenu;
+			break;
+		}
+		if (_buttonIncreasePlayers.IsClicked(_mouseX, _mouseY) && _numberPlayers < _MaxPlayers)
+		{
+			_numberPlayers++;
+			break;
+		}
+		if (_buttonDecreasePlayers.IsClicked(_mouseX, _mouseY) && _numberPlayers > _MinPlayers)
+		{
+			_numberPlayers--;
 			break;
 		}
 		break;
@@ -107,5 +119,11 @@ void Poker::DrawMainMenu(void)
 
 void Poker::DrawSettings(void)
 {
+	std::string playerCountString = "NUMBER OF PLAYERS: ";
+	playerCountString.append(std::to_string(_numberPlayers));
+	DrawString(180, 200, playerCountString, olc::BLACK, 3);
+	
 	_buttonBackToMenu.Draw();
+	_buttonIncreasePlayers.Draw();
+	_buttonDecreasePlayers.Draw();
 }

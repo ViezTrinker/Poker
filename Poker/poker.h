@@ -38,6 +38,13 @@ private:
 	Button _buttonStart;
 	Button _buttonBackToMenu;
 	Button _buttonSettings;
+
+	Button _buttonIncreasePlayers;
+	Button _buttonDecreasePlayers;
+
+	static constexpr uint8_t _MinPlayers = 2;
+	static constexpr uint8_t _MaxPlayers = 10;
+	uint8_t _numberPlayers = 5;
 };
 
 #endif // POKER_H
