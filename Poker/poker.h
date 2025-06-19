@@ -20,6 +20,7 @@ private:
 	void Draw(void);
 	void DrawMainMenu(void);
 	void DrawGame(void);
+	void DrawSettings(void);
 
 	enum class State
 	{
@@ -36,6 +37,7 @@ private:
 
 	Button _buttonStart;
 	Button _buttonBackToMenu;
+	Button _buttonSettings;
 };
 
 #endif // POKER_H

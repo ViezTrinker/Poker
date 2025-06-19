@@ -1,7 +1,8 @@
 #include "poker.h"
 
 Poker::Poker(void) : _buttonStart(this, 200, 500, 5, "START", olc::BLACK, olc::WHITE),
-						_buttonBackToMenu(this, 0, 725, 3, "<- MENU", olc::BLACK, olc::WHITE)
+					_buttonSettings(this, 550, 500, 5, "SETTINGS", olc::BLACK, olc::WHITE),
+					_buttonBackToMenu(this, 0, 725, 3, "<- MENU", olc::BLACK, olc::WHITE)
 {
 	sAppName = "POKER";
 }
@@ -29,12 +30,26 @@ void Poker::Input(void)
 		if (_buttonStart.IsClicked(_mouseX, _mouseY))
 		{
 			_state = State::GameRunning;
+			break;
+		}
+		if (_buttonSettings.IsClicked(_mouseX, _mouseY))
+		{
+			_state = State::Settings;
+			break;
 		}
 		break;
 	case State::GameRunning:
 		if (_buttonBackToMenu.IsClicked(_mouseX, _mouseY))
 		{
 			_state = State::MainMenu;
+			break;
+		}
+		break;
+	case State::Settings:
+		if (_buttonBackToMenu.IsClicked(_mouseX, _mouseY))
+		{
+			_state = State::MainMenu;
+			break;
 		}
 		break;
 	default:
@@ -64,6 +79,9 @@ void Poker::Draw(void)
 	case State::GameRunning:
 		DrawGame();
 		break;
+	case State::Settings:
+		DrawSettings();
+		break;
 	default:
 		break;
 	}
@@ -84,4 +102,10 @@ void Poker::DrawMainMenu(void)
 	DrawString(stringX, 125, "POKER", olc::BLACK, stringScale);
 
 	_buttonStart.Draw();
+	_buttonSettings.Draw();
+}
+
+void Poker::DrawSettings(void)
+{
+	_buttonBackToMenu.Draw();
 }
