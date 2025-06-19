@@ -1,10 +1,14 @@
 #include "poker.h"
 
+#include <cmath>
+
+#include "config.h"
+
 Poker::Poker(void) : _buttonStart(this, 200, 500, 5, "START", olc::BLACK, olc::WHITE),
 					_buttonSettings(this, 550, 500, 5, "SETTINGS", olc::BLACK, olc::WHITE),
 					_buttonBackToMenu(this, 0, 725, 3, "<- MENU", olc::BLACK, olc::WHITE),
-					_buttonIncreasePlayers(this, 700, 200, 3, "+", olc::BLACK, olc::WHITE),
-					_buttonDecreasePlayers(this, 750, 200, 3, "-", olc::BLACK, olc::WHITE)
+					_buttonIncreasePlayers(this, 750, 200, 3, "+", olc::BLACK, olc::WHITE),
+					_buttonDecreasePlayers(this, 700, 200, 3, "-", olc::BLACK, olc::WHITE)
 {
 	sAppName = "POKER";
 }
@@ -31,6 +35,7 @@ void Poker::Input(void)
 	case State::MainMenu:
 		if (_buttonStart.IsClicked(_mouseX, _mouseY))
 		{
+			InitTable();
 			_state = State::GameRunning;
 			break;
 		}
@@ -53,12 +58,12 @@ void Poker::Input(void)
 			_state = State::MainMenu;
 			break;
 		}
-		if (_buttonIncreasePlayers.IsClicked(_mouseX, _mouseY) && _numberPlayers < _MaxPlayers)
+		if (_buttonIncreasePlayers.IsClicked(_mouseX, _mouseY) && _numberPlayers < MaxPlayers)
 		{
 			_numberPlayers++;
 			break;
 		}
-		if (_buttonDecreasePlayers.IsClicked(_mouseX, _mouseY) && _numberPlayers > _MinPlayers)
+		if (_buttonDecreasePlayers.IsClicked(_mouseX, _mouseY) && _numberPlayers > MinPlayers)
 		{
 			_numberPlayers--;
 			break;
@@ -72,6 +77,21 @@ void Poker::Input(void)
 void Poker::Logic(void)
 {
 
+}
+
+void Poker::InitTable(void)
+{
+	_player.clear();
+	constexpr double Pi = 3.14159265;
+	double startAngle = 3 * Pi / 2;
+	double angleDistance = 2 * Pi / _numberPlayers;
+	for (uint8_t index = 0; index < _numberPlayers; index++)
+	{
+		double angle = startAngle + index * angleDistance;
+		double xPos = Config::ScreenWidth / 2 + TableRadius * cos(angle);
+		double yPos = Config::ScreenHeight / 2 + TableRadius * sin(angle);
+		_player.push_back(Player(this, xPos, yPos));
+	}
 }
 
 void Poker::Draw(void)
@@ -101,8 +121,13 @@ void Poker::Draw(void)
 
 void Poker::DrawGame(void)
 {
-	DrawCircle(ScreenWidth()/2, ScreenHeight()/2, 250, olc::BLACK);
+	DrawCircle(ScreenWidth() / 2, ScreenHeight() / 2, TableRadius, olc::BLACK);
 	_buttonBackToMenu.Draw();
+
+	for (uint8_t index = 0; index < _numberPlayers; index++)
+	{
+		_player[index].Draw();
+	}
 }
 
 void Poker::DrawMainMenu(void)

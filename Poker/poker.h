@@ -1,8 +1,12 @@
 #ifndef POKER_H
 #define POKER_H
 
+#include <vector> 
+
 #include "button.h"
 #include "olcPixelGameEngine.h"
+#include "player.h"
+#include "settings.h"
 
 class Poker : public olc::PixelGameEngine
 {
@@ -16,6 +20,8 @@ private:
 	void Input(void);
 
 	void Logic(void);
+
+	void InitTable(void);
 
 	void Draw(void);
 	void DrawMainMenu(void);
@@ -42,9 +48,9 @@ private:
 	Button _buttonIncreasePlayers;
 	Button _buttonDecreasePlayers;
 
-	static constexpr uint8_t _MinPlayers = 2;
-	static constexpr uint8_t _MaxPlayers = 10;
-	uint8_t _numberPlayers = 5;
+	uint8_t _numberPlayers = DefaultStartPlayers;
+
+	std::vector<Player> _player;
 };
 
 #endif // POKER_H

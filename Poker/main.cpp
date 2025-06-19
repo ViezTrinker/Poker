@@ -4,7 +4,7 @@
 int main()
 {
     Poker poker;
-    if (poker.Construct(ScreenWidth, ScreenHeight, PixelWidth, PixelHeight))
+    if (poker.Construct(Config::ScreenWidth, Config::ScreenHeight, Config::PixelWidth, Config::PixelHeight))
     {
         poker.Start();
     }

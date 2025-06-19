@@ -132,13 +132,16 @@
     <ClCompile Include="button.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="olcPixelGameEngine.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="poker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="button.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="olcPixelGameEngine.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="poker.h" />
+    <ClInclude Include="settings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
