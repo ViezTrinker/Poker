@@ -1,6 +1,4 @@
-﻿#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
-
-#include "deck.h"
+﻿#include "deck.h"
 
 #include <codecvt>
 #include <cstdlib>
