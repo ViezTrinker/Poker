@@ -4,6 +4,7 @@
 #include <vector> 
 
 #include "button.h"
+#include "deck.h"
 #include "olcPixelGameEngine.h"
 #include "player.h"
 #include "settings.h"
@@ -20,6 +21,8 @@ private:
 	void Input(void);
 
 	void Logic(void);
+	void PokerRoundStateMachine(void);
+	void InitRound(void);
 
 	void InitTable(void);
 
@@ -37,6 +40,12 @@ private:
 		GameFinished
 	};
 	State _state = State::MainMenu;
+
+	enum class RoundState
+	{
+		Init
+	};
+	RoundState _stateRound = RoundState::Init;
 
 	int32_t _mouseX = 0;
 	int32_t _mouseY = 0;

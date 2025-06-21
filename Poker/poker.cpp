@@ -16,6 +16,7 @@ Poker::Poker(void) : _buttonStart(this, 200, 500, 5, "START", olc::BLACK, olc::W
 bool Poker::OnUserUpdate(float fElapsedTime)
 {
 	Input();
+	Logic();
 	Draw();
 	return true;
 }
@@ -76,7 +77,31 @@ void Poker::Input(void)
 
 void Poker::Logic(void)
 {
+	switch (_state)
+	{
+	case State::GameRunning:
+		PokerRoundStateMachine();
+		break;
+	default:
+		break;
+	}
+}
 
+void Poker::PokerRoundStateMachine(void)
+{
+	switch (_stateRound)
+	{
+	case RoundState::Init:
+		InitRound();
+		break;
+	default:
+		break;
+	}
+}
+
+void Poker::InitRound(void)
+{
+	Deck deck(_numberPlayers);
 }
 
 void Poker::InitTable(void)
@@ -97,7 +122,7 @@ void Poker::InitTable(void)
 void Poker::Draw(void)
 {
 	// Blank white screen as default
-	Clear(olc::WHITE);
+	Clear(olc::GREY);
 
 	// Display mouse position for debugging purposes
 	DrawString(0, 0, std::to_string(_mouseX), olc::BLACK, 3);
@@ -128,6 +153,7 @@ void Poker::DrawGame(void)
 	{
 		_player[index].Draw();
 	}
+	Deck::DrawFlop(this);
 }
 
 void Poker::DrawMainMenu(void)
